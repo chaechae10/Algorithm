@@ -1,73 +1,46 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static int[] stack;
-    public static int size = 0;
+    public static void main(String[] args) throws IOException {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        Stack<Integer> stack = new Stack<Integer>();
 
-        int N = sc.nextInt();
-        stack = new int[N];
+        for (int i = 0; i < n; i++) {
 
-        for(int i = 0; i < N ;i++){
-            String str = sc.next();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String m = st.nextToken();
+            if (m.equals("push")) {
+                int c = Integer.parseInt(st.nextToken());
+                stack.push(c);
 
-            switch(str){
-                case "push":
-                    push(sc.nextInt());
-                    break;
-                case "pop":
-                    sb.append(pop()).append('\n');
-                    break;
-                case "size":
-                    sb.append(size()).append('\n');
-                    break;
-                case "empty":
-                    sb.append(empty()).append('\n');
-                    break;
-                case "top":
-                    sb.append(top()).append('\n');
-                    break;
+            } else if (m.equals("pop")) {
+                if (stack.isEmpty()) {
+                    System.out.println("-1");
+                } else
+                    System.out.println(stack.pop());
+
+            } else if (m.equals("size")) {
+                System.out.println(stack.size());
+            } else if (m.equals("empty")) {
+                if (stack.isEmpty()) {
+                    System.out.println("1");
+
+                } else {
+                    System.out.println("0");
+                }
+            } else if (m.equals("top")) {
+                if (stack.isEmpty()) {
+                    System.out.println("-1");
+                } else
+                    System.out.println(stack.peek());
             }
+
         }
-        System.out.println(sb.toString());
-    }
-
-    private static int top() {
-        if(size == 0){
-            return -1;
-        }else{
-            return stack[size - 1];
-        }
-    }
-
-    private static int empty() {
-        if(size == 0){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
-
-    private static int size() {
-        return size;
-    }
-
-    private static int pop() {
-        if(size == 0){
-            return -1;
-        }else{
-            int res = stack[size - 1];
-            stack[size - 1] = 0;
-            size--;
-            return res;
-        }
-    }
-
-    private static void push(int i) {
-        stack[size] = i;
-        size++;
     }
 }
