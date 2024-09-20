@@ -1,36 +1,31 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        Queue<Integer> queue = new LinkedList<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
-        //큐 선언
-        Queue<Integer> q = new LinkedList<>();
-
-        int N = sc.nextInt();
-        int K = sc.nextInt();
-
-        //N번까지 큐에 offer
-        for(int i = 1 ; i <= N ; i++){
-            q.add(i);
+        for(int i = 1; i <= N; i++) {
+            queue.add(i);
         }
 
-        StringBuilder sb =  new StringBuilder();
-        sb.append('<');
-
-        while(q.size() > 1){
-            //k-1번 앞의 사람들을 다시 큐의 끝으로 이동
-            for(int i = 0; i < K - 1;i++){
-               int value = q.poll();
-               q.offer(value);
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        while(queue.size() > 1) {
+            for(int i = 0; i < K-1;i++){
+                queue.offer(queue.poll());
             }
-            //K번째 사람 제거하고 결과 추가
-            sb.append(q.poll()).append(", ");
+            sb.append(queue.poll()).append(", ");
         }
-        //마지막 남은 사람 출력 후 >로 종료
-        sb.append(q.poll()).append('>');
+        sb.append(queue.poll()).append(">");
         System.out.println(sb);
-        }
     }
+}
